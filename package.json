@@ -1,0 +1,15 @@
+{
+  "name": "nmap",
+  "version": "1.0.0",
+  "description": "Use Node.js to build a REST API endpoint to dynamically scan IP address with nmap",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "export NODE_PATH=/usr/lib/node_modules && node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "child-process": "^1.0.2"
+  }
+}
