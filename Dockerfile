@@ -15,7 +15,8 @@ COPY package*.json ./
 # If you are building your code for production
 # RUN npm install --only=production
 RUN npm install --only=production
-RUN npm install json-server --only=production
+RUN npm install joi --only=production
+RUN npm install express --only=production
 
 # Bundle app source
 COPY . .
@@ -28,7 +29,8 @@ RUN apt-get install python-pip -y
 RUN pip install xmltodict
 
 # Open port
-EXPOSE 3000
+ENV PORT 3001
+EXPOSE ${PORT}
 
 # Start the json-server
 CMD [ "npm", "start" ]
