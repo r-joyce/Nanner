@@ -1,15 +1,21 @@
 {
-  "name": "nmap",
+  "name": "nanner",
   "version": "1.0.0",
-  "description": "Use Node.js to build a REST API endpoint to dynamically scan IP address with nmap",
+  "description": "Node Scanner, a Node based server to provide a restful API to use various network scanning tools",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "export NODE_PATH=/usr/lib/node_modules && node server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "child-process": "^1.0.2"
+    "child-process": "^1.0.2",
+    "express": "^4.16.4",
+    "joi": "^14.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:r-joyce/Nanner.git"
   }
 }
