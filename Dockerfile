@@ -21,6 +21,9 @@ RUN npm install express --only=production
 # Bundle app source
 COPY . .
 
+# Make script executable
+RUN chmod +x /nmap/scan.sh
+
 # Install nmap
 RUN apt-get install nmap -y
 
