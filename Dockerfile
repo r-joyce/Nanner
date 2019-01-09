@@ -22,7 +22,7 @@ RUN npm install express --only=production
 COPY . .
 
 # Make script executable
-RUN chmod +x /nmap/scan.sh
+RUN chmod +x nmap/scan.sh
 
 # Install nmap
 RUN apt-get install nmap -y
@@ -32,7 +32,7 @@ RUN apt-get install python-pip -y
 RUN pip install xmltodict
 
 # Open port
-ENV PORT 3001
+ENV PORT 3000
 EXPOSE ${PORT}
 
 # Start the json-server
