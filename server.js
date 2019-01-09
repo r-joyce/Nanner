@@ -25,8 +25,12 @@ app.post('/api/nmap', (req, res) => {
 	}
 
 	// Log the request to the server console
+	var remoteIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	if (remoteIP.substr(0, 7) == "::ffff:") {
+ 		remoteIP = remoteIP.substr(7)
+	}
 	var time = new Date().toISOString();
-	process.stdout.write(`[${time}] [${req.connection.remoteAddress}] nmap ${args}${ip}... `);
+	process.stdout.write(`[${time}] [${remoteIP}] nmap ${args}${ip}... `);
 
 	// Perform the scan
 	var nmap = require('child_process').spawnSync(
