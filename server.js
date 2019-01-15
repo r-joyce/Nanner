@@ -25,8 +25,11 @@ app.post('/api/nmap', (req, res) => {
 	}
 
 	// Log the request to the server console
+	var remoteIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+	if (remoteIP.substr(0, 7) == "::ffff:") {
+ 		remoteIP = remoteIP.substr(7)
+	}
 	var time = new Date().toISOString();
-	process.stdout.write(`[${time}] [${req.connection.remoteAddress}] nmap ${args}${ip}... `);
 
 	// Perform the scan
 	var nmap = require('child_process').spawnSync(
@@ -35,13 +38,21 @@ app.post('/api/nmap', (req, res) => {
 
 	// Send results of scan
 	if (nmap.stdout != null) {
-		console.log('✔');
-		res.write(nmap.stdout.toString('utf8'));
+		let output = nmap.stdout.toString('utf8');
+		if (output.length == 0) {
+			console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ❌`);
+			res.status(400).send(`Bad request`);
+		} else {
+			const json = JSON.parse(output);
+			let elapsed = json['nmaprun']['runstats']['finished']['@elapsed'];
+			console.log(`[${time}] [${remoteIP}] [${elapsed}s] nmap ${args}${ip}... ✔️`);
+			res.write(output);
+		}
 	} else if (nmap.stderr != null) {
-		console.log('✖️');
+		console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ❌`);
 		res.status(400).send(nmap.stderr.toString('utf8'));
 	} else {
-		console.log('✖️');
+		console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ❌`);
 		res.status(400).send(`error processing scan: nmap ${args}${ip}`);
 	}
 	res.end();
