@@ -40,19 +40,19 @@ app.post('/api/nmap', (req, res) => {
 	if (nmap.stdout != null) {
 		let output = nmap.stdout.toString('utf8');
 		if (output.length == 0) {
-			console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ✖️`);
+			console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ❌`);
 			res.status(400).send(`Bad request`);
 		} else {
 			const json = JSON.parse(output);
 			let elapsed = json['nmaprun']['runstats']['finished']['@elapsed'];
-			console.log(`[${time}] [${remoteIP}] [${elapsed}s] nmap ${args}${ip}... ✔`);
+			console.log(`[${time}] [${remoteIP}] [${elapsed}s] nmap ${args}${ip}... ✔️`);
 			res.write(output);
 		}
 	} else if (nmap.stderr != null) {
-		console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ✖️`);
+		console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ❌`);
 		res.status(400).send(nmap.stderr.toString('utf8'));
 	} else {
-		console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ✖️`);
+		console.log(`[${time}] [${remoteIP}] nmap ${args}${ip}... ❌`);
 		res.status(400).send(`error processing scan: nmap ${args}${ip}`);
 	}
 	res.end();
