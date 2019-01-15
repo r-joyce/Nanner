@@ -18,14 +18,14 @@ RUN npm install --only=production
 RUN npm install joi --only=production
 RUN npm install express --only=production
 
-# Bundle app source
-COPY . .
-
-# Make script executable
-RUN chmod +x nmap/scan.sh
-
 # Install nmap
 RUN apt-get install nmap -y
+
+# Install masscan
+RUN git clone https://github.com/robertdavidgraham/masscan
+WORKDIR /usr/src/app/masscan/
+RUN make -j
+WORKDIR /usr/src/app
 
 # Install pip and install required python module
 RUN apt-get install python-pip -y
@@ -34,6 +34,12 @@ RUN pip install xmltodict
 # Open port
 ENV PORT 3000
 EXPOSE ${PORT}
+
+# Bundle app source
+COPY . .
+
+# Make script executable
+RUN chmod +x nmap/scan.sh
 
 # Start the json-server
 CMD [ "npm", "start" ]
