@@ -21,6 +21,12 @@ RUN npm install express --only=production
 # Install nmap
 RUN apt-get install nmap -y
 
+# Add custom scripts
+RUN git clone https://github.com/vulnersCom/nmap-vulners.git
+WORKDIR /usr/src/app/nmap-vulners
+RUN cp vulners.nse /usr/share/nmap/scripts/
+WORKDIR /usr/src/app
+
 # Install masscan
 RUN git clone https://github.com/robertdavidgraham/masscan
 WORKDIR /usr/src/app/masscan/
