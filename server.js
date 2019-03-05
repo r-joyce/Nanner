@@ -26,7 +26,7 @@ app.post('/api/nmap', (req, res) => {
 
 	// Log the request to the server console
 	var remoteIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-	if (remoteIP.substr(0, 7) == "::ffff:") {
+	if (remoteIP != null && remoteIP.substr(0, 7) == "::ffff:") {
  		remoteIP = remoteIP.substr(7)
 	}
 	var time = new Date().toISOString();
