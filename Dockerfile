@@ -27,6 +27,11 @@ WORKDIR /usr/src/app/nmap-vulners
 RUN cp vulners.nse /usr/share/nmap/scripts/
 WORKDIR /usr/src/app
 
+RUN git clone https://github.com/scipag/vulscan.git /usr/share/nmap/scripts/vulscan
+WORKDIR /usr/share/nmap/scripts/vulscan
+CMD ["/bin/bash","updateFiles.sh"]
+WORKDIR /usr/src/app
+
 # Install masscan
 RUN git clone https://github.com/robertdavidgraham/masscan
 WORKDIR /usr/src/app/masscan/
