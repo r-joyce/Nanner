@@ -44,8 +44,9 @@ EXPOSE ${PORT}
 # Bundle app source
 COPY . .
 
-# Make script executable
+# Make scripts executable
 RUN chmod +x nmap/scan.sh
+RUN chmod +x masscan/scan.sh
 
 # Start the json-server
 CMD [ "npm", "start" ]
