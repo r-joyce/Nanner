@@ -1,6 +1,6 @@
 # Node Scanner
 
-Deploy a Node Express server that accepts RESTful API calls to dynamically scan an IP address or a range of IP addresses with the popular NMap scanning tool, converting the standard XML output to JSON.
+Deploy a Node Express server that accepts RESTful API calls to dynamically scan an IP address or a range of IP addresses with the popular NMap scanning tool or Masscan, converting the standard XML output to JSON.
 
 Future plans are to include:
 - More open source scanning tools
@@ -21,11 +21,11 @@ Perform a simple POST request against `http://<node-server-ip>:3000/api/<tool>` 
 
 **NMap Scan**
 
-To scan with NMap, in the body of the request include a JSON blob of:
+To scan with NMap, in the body of the POST request include a JSON blob of:
 
 ```
 {
-	"ip": "<ip/cidr ip>",
+	"target": "<ip/cidr ip>",
 	"args": "<args to pass to NMap>"
 }
 ```
@@ -33,3 +33,16 @@ To scan with NMap, in the body of the request include a JSON blob of:
 The server should then perform a scan using NMap, output to XML, and use a python script to convert the XML to JSON and return.
 
 *Note: Due to how XML works, there may be inconsistencies with data layout with the conversion from XML to JSON.*
+
+**Masscan**
+
+To scan with Masscan, in the body of the POST request include a JSON blob of:
+
+```
+{
+	"target": "<ip/cidr ip>",
+	"args": "<args to pass to Masscan>"
+}
+```
+
+The server will then perform the scan and output the results as JSON.
