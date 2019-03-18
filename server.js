@@ -99,7 +99,7 @@ app.post('/api/masscan', (req, res) => {
 		} else {
 			// const json = JSON.parse(output);
 			// let elapsed = json['nmaprun']['runstats']['finished']['@elapsed'];
-			// console.log(`[${time}] [${remoteTarget}] [${elapsed}s] masscan ${args}${target}... ✔️`);
+			console.log(`[${time}] [${remoteTarget}] masscan ${args}${target}... ✔️`);
 			res.write(output);
 		}
 	} else if (masscan.stderr != null) {
